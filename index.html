@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>.weather/</title>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	crossorigin=""/>
+	<link rel="stylesheet" href="css/styles.css">
+	<script defer src="http://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+	crossorigin=""></script>
+	<script defer src="JS/callback.js"></script>
+	<script defer src="main.js"></script>
+</head>
+<body>
+	<div class="superWrapper" id="superWrapper">
+		<h1 class="title">.weather/</h1>
+		<h3 class="subtitle">Get daily max and min temperatures with coordinates</h3>
+		<div class="wrapperSearch">
+			<input type="text" id="inputLat" placeholder="Latitude coordinates">
+			<input type="text" id="inputLon" placeholder="Logitude coordinates">
+			<button id="searchBTN">Search</button>
+			<button id="resetBTN">Reset</button>
+		</div>
+		<div class="wrapperResult" id="wrapperResult"></div>
+	</div>
+	<div class="ct-chart" id="chart1"></div>
+	<div id="mapid"></div>
+	<!-- besides ct-chart I was using ct-octave (1:2 ratio) -->
+</body>
+</html>
