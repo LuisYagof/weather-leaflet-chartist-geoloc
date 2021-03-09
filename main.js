@@ -1,23 +1,35 @@
 const WRAPPERresult = document.querySelector("#wrapperResult")
-const INPUTlat = document.querySelector("#inputLat")
-const INPUTlon = document.querySelector("#inputLon")
 const SEARCHbtn = document.querySelector("#searchBTN")
 const RESETbtn = document.querySelector("#resetBTN")
 
-SEARCHbtn.addEventListener("click", function(){
-    getWeather(INPUTlat.value, INPUTlon.value, (error, data) => {
-        if(error !== null) {
-          console.error(error);
-        }
-        else {
-          transformData(data.daily)
-          printMap(INPUTlat.value, INPUTlon.value)
-          if(!WRAPPERresult.classList.contains("written")){
-            printData(data.current.weather[0])
-          }
-        }
-      })
-})
+// http://openweathermap.org/img/wn/10d@2x.png
+
+SEARCHbtn.addEventListener("click", () => getLocation())
+
+// -------------------------------------LOCAT
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    alert("Geolocation is not supported by this browser.")
+  }
+}
+
+function showPosition(position) {
+  getWeather(position.coords.latitude, position.coords.longitude, (error, data) => {
+    if(error !== null) {
+      console.error(error);
+    }
+    else {
+      transformData(data.daily)
+      printMap(position.coords.latitude, position.coords.longitude)
+      if(!WRAPPERresult.classList.contains("written")){
+        printData(data.current.weather[0])
+      }
+    }
+  })
+}
 
 // -------------------------------------PRINT CURRENT
 
@@ -26,6 +38,10 @@ function printData(elem){
   let tag = document.createElement("p")
   let tagCont = document.createTextNode(`The current weather is ${elem.description}`)
   tag.appendChild(tagCont)
+
+  let icon = document.createElement("img")
+  icon.src = `http://openweathermap.org/img/wn/${elem.icon}@2x.png`
+  WRAPPERresult.appendChild(icon)
   WRAPPERresult.appendChild(tag)
 }
 
@@ -93,17 +109,15 @@ function printMap(lat, lon){
 // --------------------------------RESET & EVENTS
 
 function reset(){
-  INPUTlat.value = ""
-  INPUTlon.value = ""
-  document.querySelector("p").remove()
+  WRAPPERresult.querySelectorAll('*').forEach(n => n.remove())
   WRAPPERresult.classList.remove("written")
+
   document.querySelector(".ct-chart").querySelectorAll('*').forEach(n => n.remove())
+
   document.querySelector("#mapid").remove()
   let mapbox = document.createElement("div")
   mapbox.setAttribute("id", "mapid")
   document.body.appendChild(mapbox)
-  
-  
 }
 
 RESETbtn.addEventListener("click", reset)
